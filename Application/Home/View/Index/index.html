@@ -1,0 +1,320 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="pragma" content="no-cache">
+		<meta http-equiv="cache-control" content="no-cache">
+		<meta http-equiv="expires" content="0">
+		<title>Fuck! I am Falling Class!</title>
+        <!-- Fa icon -->
+        <link href="__PUBLIC__/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+        
+		<!--jQuery-->
+		<script type="text/javascript" src="http://libs.useso.com/js/jquery/1.8.3/jquery.min.js"></script>
+		<!--cufon-->
+		
+		<import type='js' file="js.cufon-yui" />
+
+		<!-- font Js -->
+		<import type='js' file="fonts.Digital_ICG_500" />
+		
+		<style type="text/css">
+			.content{
+				margin: 0 auto;
+			}
+			.timer{
+				font-size:20pt;
+				color:#FFCC00;
+				margin-top: 10px;
+			}
+            
+            .config{
+                float: right;
+                color:grey;
+            }
+            
+            .config:hover{
+                color:black;
+                cursor: pointer;
+            }
+
+            .config-panel{
+            	display:none;
+                position:absolute;
+                width:220px;
+                top:60px;
+                left:960px !import;
+                left:1210px;
+                background-color: #fff;
+                border: solid #ccc 1px;
+                padding:20px;
+                z-index: 2;
+                font-size: 20px;
+            }
+            
+            /*FireFox*/
+            @-moz-document url-prefix() {
+                .config-panel{
+            	display:none;
+                position:absolute;
+                width:220px;
+                top:60px;
+                left:960px;
+                background-color: #fff;
+                border: solid #ccc 1px;
+                padding:20px;
+                z-index: 2;
+                font-size: 20px;
+            }
+            }
+  
+            
+            .labelContent{
+                display: inline-block;
+                width:50px;
+            }
+            
+            .labelInput{
+                display: inline-block;
+                width:120px;
+            }
+            
+            .button{
+                display:inline-block;
+                border:solid #ccc 1px;
+                width:100px;
+                height:30px;
+                line-height:30px;
+                cursor: pointer;
+                color:grey;
+            }
+            
+            .button:hover{
+                color:black;
+                background-color: #d3d3d3;
+            }
+            
+		</style>
+	</head>
+	<body style="margin:0px;">
+		<div class="container">
+			<div class="content" style="width:200px;display:none;">
+				<div id="timer" class="timer" >
+					1234
+				</div>
+			</div>
+            <div class="content"style="width:1000px;margin-top:20px;padding-left:20px;">
+                <div style="font-size:20pt;">
+                    <span>
+                        作業界限
+                    </span>
+                    <span>
+                        までぬと
+                    </span>
+                    <span>
+                        WORK TIME REMAINING
+                    </span>
+                    <span id="config" class="config">
+                        <i class="fa fa-cogs"></i>
+                    </span>
+                    <span id="config-panel" class="config-panel">
+                        <div style="height:24px;">
+                            <span class="labelContent" style="margin-top:5px;font-size:14px;line-height:24px;">
+                                <label for="startTimeStr">
+                                    On:
+                                </label>
+                            </span>
+                            <span class="labelInput">
+                                <input type="time" value="09:00" id="startTimeStr" style="width:150px;padding-left:5px;"/>
+                            </span>
+                        </div>
+                        <div style="margin-top:10px;">
+                            <span class="labelContent" style="margin-top:5px;font-size:14px;line-height:24px;">
+                                <label for="endTimeStr">
+                                    Off:
+                                </label>
+                            </span>
+                            <span class="labelInput" >
+                                <input type="time" value="18:00" id="endTimeStr" style="width:150px;padding-left:5px;"/>
+                            </span>
+                        </div>
+                        <div style="text-align:center;margin-top:20px;">
+                            <span class="button">
+                                save
+                            </span>
+                            <span class="button" id="setTime">
+                                set time
+                            </span>
+                        </div>
+                    </span>
+                </div>
+                <div>
+                    <div  style="display:inline-block;">
+                        <span class="timer" style="font-size:130pt;letter-spacing: 15px;color:black;" id="time">
+                            28:88:88
+                        </span>
+                    </div>
+                    <div  style="display:inline-block;">
+                        <span class="timer" style="font-size:70pt;color:black;" id="milliseconds">
+                            .888
+                        </span>
+                    </div>
+                </div>
+            </div>
+		</div>
+	</body>
+	<!-- init script -->
+	<script type="text/javascript">
+		var idSect = "#timer";
+        var timeRegExpPattern = /^\d{1,2}:\d{1,2}$/;
+		Cufon.replace('.timer');
+		$(function(){
+			var screenHeight = window.innerHeight ;
+			var screenWidth = window.innerWidth ;
+//			$(".container").css({
+//				width:screenWidth+"px",
+//				height:screenHeight+"px"
+//			});
+//            
+//			$(window).resize(function(){
+//				var screenHeight = window.innerHeight ;
+//				var screenWidth = window.innerWidth ;
+//				if(screenWidth>800&&screenHeight>600){
+//					$(".container").css({
+//						width:screenWidth+"px",
+//						height:screenHeight+"px"
+//					});
+//				}
+//			});
+            
+            $("#config").click(function(){
+                $("#config-panel").slideToggle();
+                $("#startTimeStr").val(startDateStr);
+                $("#endTimeStr").val(expiredDateStr);
+            });
+            
+            $("#setTime").click(function(){
+                var startTimeStr = $("#startTimeStr").val();
+                var endTimeStr = $("#endTimeStr").val();
+                if(startTimeStr&&timeRegExpPattern.test(startTimeStr)){
+                    var startTime = new Date();
+                    startTime.setHours(parseInt(startTimeStr.split(":")[0]));
+                    startTime.setMinutes(parseInt(startTimeStr.split(":")[1]));
+                    startDate = startTime;
+                    startDateStr = startTimeStr;
+                }
+                if(endTimeStr&&timeRegExpPattern.test(endTimeStr)){
+                    var endTime = new Date();
+                    endTime.setHours(parseInt(endTimeStr.split(":")[0]));
+                    endTime.setMinutes(parseInt(endTimeStr.split(":")[1]));
+                    expiredDate = endTime;
+                    expiredDateStr = endTimeStr;
+                }
+            });
+		});
+	</script>
+	<!-- function script  -->
+	<script type="text/javascript">
+		
+		var nowDate = new Date();
+		var defaultExpiredDateStr = "18:00";
+		var defaultStartDateStr = "9:00";
+		var expiredDateStr;
+		var startDateStr;
+
+		function initTime(startDateStr,expiredDateStr){
+			if(!startDateStr){
+				startDateStr = defaultStartDateStr;
+			}
+			var dateStrList = startDateStr.split(":");
+			window.startDate = new Date();
+			startDate.setHours(parseInt(dateStrList[0]));
+			startDate.setMinutes(parseInt(dateStrList[1]));
+			startDate.setSeconds(0);
+			startDate.setMilliseconds(0);
+			if(!expiredDateStr){
+				expiredDateStr = defaultExpiredDateStr;
+			}
+			var dateStrList = expiredDateStr.split(":");
+			window.expiredDate = new Date();
+			expiredDate.setHours(parseInt(dateStrList[0]));
+			expiredDate.setMinutes(parseInt(dateStrList[1]));
+			expiredDate.setSeconds(0);
+			expiredDate.setMilliseconds(0);
+		}
+
+		initTime();
+		
+		var diffDate = getDateDiff(nowDate,startDate,expiredDate);
+		//判断两个日期之间的差值
+		function getDateDiff(checkDate,startDate,endDate){
+			var checkDateTime = checkDate.getTime();
+			var startDateTime = startDate.getTime();
+			var endDateTime = endDate.getTime();
+			var result = new Date();
+			if(checkDateTime>endDateTime||checkDateTime<startDateTime){
+				return result;
+			}else{
+				var diffTime = endDateTime-checkDateTime;
+				result.setTime(diffTime);
+				//修正时区偏移
+				result.setTime(result.getTime()+result.getTimezoneOffset()*60*1000);
+			}
+			return result;
+		}
+
+		//渲染时间到元素
+		function renderDate(idSect,date){
+			var hourStr = date.getHours();
+			var minutesStr = date.getMinutes();
+			if(minutesStr<10){
+				minutesStr = "0"+minutesStr;
+			}
+			var secondsStr = date.getSeconds();
+			if(secondsStr<10){
+				secondsStr = "0"+secondsStr;
+			}
+			var millisecondStr = date.getMilliseconds();
+			if(millisecondStr<100&&millisecondStr>10){
+				millisecondStr = "0"+millisecondStr;
+			}else if(millisecondStr<10){
+				millisecondStr = "00" + millisecondStr;
+			}
+			var timeStr = hourStr+":"+minutesStr+":"+secondsStr+"."+millisecondStr;
+			$(idSect).text(timeStr);
+		}
+
+		//渲染时间到元素
+		function renderDateEle(date){
+			var hourStr = date.getHours();
+			var minutesStr = date.getMinutes();
+			if(minutesStr<10){
+				minutesStr = "0"+minutesStr;
+			}
+			var secondsStr = date.getSeconds();
+			if(secondsStr<10){
+				secondsStr = "0"+secondsStr;
+			}
+			var millisecondStr = date.getMilliseconds();
+			if(millisecondStr<100&&millisecondStr>10){
+				millisecondStr = "0"+millisecondStr;
+			}else if(millisecondStr<10){
+				millisecondStr = "00" + millisecondStr;
+			}
+			var time = hourStr+":"+minutesStr+":"+secondsStr;
+			var milliseconds = "."+millisecondStr;
+			$("#time").text(time);
+			$("#milliseconds").text(milliseconds);
+		}
+
+		renderDate(idSect,diffDate);
+		//循环显示
+		setInterval(function(){
+			var checkDate = new Date();
+			var diffDate = getDateDiff(checkDate,startDate,expiredDate);
+//			renderDate(idSect,diffDate);
+			renderDateEle(diffDate);
+			Cufon.replace('.timer');
+		},10);
+
+	</script>
+</html>
